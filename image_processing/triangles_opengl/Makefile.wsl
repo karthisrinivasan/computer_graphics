@@ -1,0 +1,22 @@
+LDFLAGS_COMMON = -lopengl32 -lfreeglut -lglu32 -static-libgcc -static-libstdc++
+CFLAGS_COMMON = -c -Wall -I./ -O3 -D_WSL_
+
+# calls:
+CC         = x86_64-w64-mingw32-g++
+CFLAGS     = ${CFLAGS_COMMON}
+LDFLAGS    = ${LDFLAGS_COMMON}
+EXECUTABLE = run.exe
+
+SOURCES    = main.cpp
+OBJECTS    = $(SOURCES:.cpp=.o)
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	rm -f *.o
